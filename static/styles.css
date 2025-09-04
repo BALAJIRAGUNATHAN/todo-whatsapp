@@ -1,0 +1,32 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+h2, h3 {
+    color: #495057;
+}
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item {
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+button.btn {
+    margin-left: 10px;
+}
+
+input[type="datetime-local"], input[type="text"], input[type="password"] {
+    padding: 10px;
+}
+
+.form-label {
+    font-weight: bold;
+}

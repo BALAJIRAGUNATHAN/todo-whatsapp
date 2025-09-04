@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Welcome, {{ current_user.username }}!</h2>
+    <p>This is your dashboard. You can view and manage your tasks here.</p>
+
+    <!-- Add Task Form -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Add New Task</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('dashboard') }}">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Task Title</label>
+                    <input type="text" name="title" id="title" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="due_date" class="form-label">Due Date</label>
+                    <input type="datetime-local" name="due_date" id="due_date" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Task</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Task List -->
+    <h3>Your Tasks</h3>
+    <div class="list-group">
+        {% for task in tasks %}
+            <div class="list-group-item">
+                <h5>{{ task.title }}</h5>
+                <p>Due: {{ task.due_date.strftime('%Y-%m-%d %H:%M') }}</p>
+                <p>Status: {% if task.completed %}Completed{% else %}Pending{% endif %}</p>
+                <div class="btn-group">
+                    <a href="{{ url_for('edit_task', task_id=task.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form method="POST" action="{{ url_for('delete_task', task_id=task.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                    {% if not task.completed %}
+                        <form method="POST" action="{{ url_for('complete_task', task_id=task.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-success btn-sm">Mark as Completed</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <p>No tasks found. Start by adding a new task!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
